@@ -25,10 +25,10 @@ void _set_vector(Player *self, int vx, int vy)
  * \param self          Instance
  * \param delta_time    Valeur d'interpolation
  */
-void _move(Player *self, double delta_time)
+void _move(Player *self, double *delta_time)
 {
-    self->rect.x += (self->speed * self->vector.x) * delta_time;
-    self->rect.y += (self->speed * self->vector.y) * delta_time;
+    self->rect.x += (self->speed * self->vector.x) * *delta_time;
+    self->rect.y += (self->speed * self->vector.y) * *delta_time;
 }
 
 // ====================
@@ -77,7 +77,6 @@ void Player_process_event(Player *self, SDL_Event *event)
         {
             _set_vector(self, 0, -1);
         }
-        _move(self, 1.0);
     }
     else if (event->type == SDL_KEYUP)
     {
@@ -90,6 +89,7 @@ void Player_process_event(Player *self, SDL_Event *event)
 
 void Player_update(Player *self, double *delta_time)
 {
+    _move(self, delta_time);
 }
 
 void Player_draw(Player *self, Renderer *renderer)

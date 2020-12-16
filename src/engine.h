@@ -19,10 +19,7 @@
 #include "manager.h"
 
 /** Fréquence de pulsation de la boucle principale du moteur. */
-static const double PULSE = 1.0 / 60.0;
-
-/** Indique si le rendu graphique est synchronisé. */
-static const bool LOCK_FRAME_RATE = true;
+static const double PULSE = 1000.0 / 60.0;
 
 /** Largeur. */
 static const int WIDTH = 320;
