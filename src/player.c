@@ -1,5 +1,6 @@
 /**
- * author: MOSELLE Maxime
+ * \file player.c
+ * \author: MOSELLE Maxime
  *  
  * Implémentation du prototype du joueur.
  */
@@ -78,7 +79,7 @@ void Player_process_event(Player *self, SDL_Event *event)
             _set_vector(self, 0, -1);
         }
     }
-    else if (event->type == SDL_KEYUP)
+    if (event->type == SDL_KEYUP)
     {
         if (event->key.keysym.sym == SDLK_RIGHT || event->key.keysym.sym == SDLK_LEFT || event->key.keysym.sym == SDLK_DOWN || event->key.keysym.sym == SDLK_UP)
         {

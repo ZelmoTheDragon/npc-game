@@ -1,5 +1,6 @@
 /**
- * author: MOSELLE Maxime
+ * \file debug.c
+ * \author: MOSELLE Maxime
  *  
  * Implémentation du prototype des informations de débogage.
  */
@@ -39,6 +40,7 @@ void Debug_tick(Debug *self)
     }
 }
 
-void Debug_render(Debug *self){
+void Debug_render(Debug *self)
+{
     self->frames++;
 }

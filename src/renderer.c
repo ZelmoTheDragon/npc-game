@@ -1,5 +1,6 @@
 /**
- * author: MOSELLE Maxime
+ * \file renderer.c
+ * \author: MOSELLE Maxime
  *  
  * Implémentation du prototype du moteur de rendu.
  */

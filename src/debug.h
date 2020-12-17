@@ -1,5 +1,6 @@
 /**
- * author: MOSELLE Maxime
+ * \file debug.h
+ * \author: MOSELLE Maxime
  *  
  * Prototype pour les informations de débogage.
  */
@@ -44,7 +45,7 @@ void Debug_del(Debug *self);
 
 /**
  * Calculer le temps dans la boucle de mise à jour et afficher un message de débogage dans la sortie SDL.
- * Cette fonction doit être appeler dans la fonction 'update'.
+ * Cette fonction doit être appelée dans la fonction 'update'.
  * 
  * \param self  Instance
  */
@@ -52,7 +53,7 @@ void Debug_tick(Debug *self);
 
 /**
  * Calculer le temps de la boucle de rendu graphique.
- * Cette fonction doit être appeler dans la fonction 'draw'.
+ * Cette fonction doit être appelée dans la fonction 'draw'.
  * 
  * \param self  Instance
  */

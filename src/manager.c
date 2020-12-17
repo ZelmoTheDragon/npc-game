@@ -1,5 +1,6 @@
 /**
- * author: MOSELLE Maxime
+ * \file manager.c
+ * \author: MOSELLE Maxime
  *  
  * Implémentation du prototype du gestionnaire du jeu.
  */
