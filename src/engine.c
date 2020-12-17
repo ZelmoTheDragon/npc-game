@@ -32,6 +32,14 @@ void _process_events(Engine *self)
         {
             _stop(self);
         }
+        if (event.type == SDL_KEYDOWN)
+        {
+            // Basculer le mode d'affichage si F11 est appuyé
+            if (event.key.keysym.sym == SDLK_F11)
+            {
+                Engine_toggle_screen(self);
+            }
+        }
     }
     Manager_process_event(self->manager, &event);
 }
@@ -70,6 +78,7 @@ Engine *Engine_new(SDL_Window *window, Renderer *renderer)
     self->renderer = renderer;
     self->manager = Manager_new();
     self->running = false;
+    self->full_screen = false;
     return self;
 }
 
@@ -134,4 +143,19 @@ void Engine_start(Engine *self)
     // Fin de la boucle
     // Libération des ressources
     Engine_del(self);
+}
+
+void Engine_toggle_screen(Engine *self)
+{
+    self->full_screen = !self->full_screen;
+    if (self->full_screen)
+    {
+        SDL_SetWindowFullscreen(self->window, SDL_WINDOW_FULLSCREEN);
+        SDL_Log("Full screen mode");
+    }
+    else
+    {
+        SDL_SetWindowFullscreen(self->window, 0);
+        SDL_Log("Window mode");
+    }
 }

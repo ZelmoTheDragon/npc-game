@@ -37,7 +37,6 @@ static const int SCALE = 3;
  */
 typedef struct Engine
 {
-
     /** Fenêtre principale SDL. */
     SDL_Window *window;
 
@@ -49,6 +48,9 @@ typedef struct Engine
 
     /** Indique si le moteur est en fonctionnement. */
     bool running;
+
+    /** Indique si la fenêtre est en plein écran. */
+    bool full_screen;
 } Engine;
 
 /**
@@ -73,5 +75,12 @@ void Engine_del(Engine *self);
  * \param self  Instance
  */
 void Engine_start(Engine *self);
+
+/**
+ * Basculer la fenêtre en mode plein écran ou non.
+ * 
+ * \param self  Instance
+ */
+void Engine_toggle_screen(Engine *self);
 
 #endif
