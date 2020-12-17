@@ -26,7 +26,7 @@ typedef struct Renderer
 {
 
     /** Moteur de rendu graphique SDL. */
-    SDL_Renderer *renderer;
+    SDL_Renderer *graphic2d;
 
     /** Surface tampon pour le rendu avant affichage sur la fenêtre. */
     SDL_Surface *surface;
@@ -36,9 +36,6 @@ typedef struct Renderer
 
     /** Hauteur de la zone de dessin. */
     int height;
-
-    /** Coéfficient de mise à l'échelle. */
-    int scale;
 
     /** Décalage en abcisse. */
     int x_offset;
@@ -50,9 +47,12 @@ typedef struct Renderer
 /**
  * Constructeur.
  * 
- * \return Une nouvelle instance
+ * \param graphic2d     Moteur de rendu SDL
+ * \param width         Largeur de la zone de dessin
+ * \param height        Hauteur de la zone de dessin
+ * \return              Une nouvelle instance
  */
-Renderer *Renderer_new(SDL_Renderer *renderer, int width, int height, int scale);
+Renderer *Renderer_new(SDL_Renderer *graphic2d, int width, int height);
 
 /**
  * Destructeur.

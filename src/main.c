@@ -16,7 +16,7 @@
  */
 int main(int argc, char *argv[])
 {
-    // Initialiation du SDL.
+    // Initialiation de SDL.
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         SDL_Log("Fail to load SDL2: %s", SDL_GetError());
@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
+    // Initialisation de SDL Image.
     if (IMG_Init(IMG_INIT_PNG) == 0)
     {
         SDL_Log("Fail to load SDL2 Image: %s", SDL_GetError());
@@ -49,13 +50,14 @@ int main(int argc, char *argv[])
     }
 
     // Création du moteur de rendu SDL.
-    SDL_Renderer *sdl_renderer = SDL_CreateRenderer(
-        window,
-        -1,
-        0);
+    // La zone de dessin du moteur de rendu est plus petite que la fenêtre.
+    // Par conséquant, le rendu final est étiré sur toute la surface de l'écran.
+    SDL_Renderer *graphic2d = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_RenderSetIntegerScale(graphic2d, true);
+    SDL_RenderSetLogicalSize(graphic2d, WIDTH, HEIGHT);
 
     // Création du moteur de jeu.
-    Renderer *renderer = Renderer_new(sdl_renderer, WIDTH, HEIGHT, SCALE);
+    Renderer *renderer = Renderer_new(graphic2d, WIDTH, HEIGHT);
     Engine *engine = Engine_new(window, renderer);
     Engine_start(engine);
 
