@@ -13,8 +13,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 #include <SDL2/SDL.h>
 #include "renderer.h"
+
+/** Emplacement de l'image de texture du joueur. */
+static const char *PLAYER_SPRITE_SHEET = "res/images/npc_test.png";
+
+/** Largeur d'une tuile graphique. */
+static const int PLAYER_SPRITE_WIDTH = 16;
+
+/** Hauteur d'une tuile graphique. */
+static const int PLAYER_SPRITE_HEIGHT = 32;
+
+/** Vitesse de l'animation. */
+static const int PLAYER_ANIMATION_SPEED = 50;
+
+/** Emplacement de la tuile graphique vers le haut. */
+static const SDL_Point PLAYER_OFFSET_UP = (SDL_Point){0, 64};
+
+/** Emplacement de la tuile graphique vers le bas. */
+static const SDL_Point PLAYER_OFFSET_DOWN = (SDL_Point){0, 0};
+
+/** Emplacement de la tuile graphique vers la gauche. */
+static const SDL_Point PLAYER_OFFSET_LEFT = (SDL_Point){0, 96};
+
+/** Emplacement de la tuile graphique vers la droite. */
+static const SDL_Point PLAYER_OFFSET_RIGHT = (SDL_Point){0, 32};
+
+/** Emplacement de la tuile graphique par défaut. */
+static const SDL_Point PLAYER_OFFSET_DEFAULT = (SDL_Point){0, 0};
 
 /**
  * Un personnage.
@@ -32,6 +60,21 @@ typedef struct Player
 
     /** Vitesse de déplacement. */
     int speed;
+
+    /** Image courante de l'animation. */
+    int frame;
+
+    /** Indique si l'animation est en cours. */
+    bool playing;
+
+    /** Direction de l'animation. */
+    SDL_Point offset;
+
+    /** Zone de la feuille de texture courante. */
+    SDL_Rect sprite_sheet_area;
+
+    /** Image de texture du joueur. */
+    SDL_Texture *sprite_sheet;
 } Player;
 
 /**

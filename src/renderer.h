@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 /** Taille d'un pixel de couleur en bit. */
 static const int DEPTH = 32;
@@ -61,6 +62,15 @@ Renderer *Renderer_new(SDL_Renderer *renderer, int width, int height, int scale)
 void Renderer_del(Renderer *self);
 
 /**
+ * Charger une texture.
+ * 
+ * \param self  Instance
+ * \param path  Chemin de l'image à charger.
+ * \return      Une Texture
+ */
+SDL_Texture *Renderer_load_image(Renderer *self, char *path);
+
+/**
  * Modifier le décalage pour le rendu graphique.
  * 
  * \param self      Instance
@@ -82,6 +92,16 @@ void Renderer_clear(Renderer *self);
  * \param self  Instance
  */
 void Renderer_draw(Renderer *self);
+
+/**
+ * Dessiner une image.
+ * 
+ * \param self          Instance
+ * \param image         Image SDL sous forme de texture
+ * \param source        Zone de l'image à dessiner
+ * \param destination   Zone de la fenêtre à remplir
+ */
+void Renderer_draw_image(Renderer *self, SDL_Texture *image, SDL_Rect source, SDL_Rect destination);
 
 /**
  * Dessiner un rectangle à couleur unique.

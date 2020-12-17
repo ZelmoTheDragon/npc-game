@@ -26,9 +26,17 @@ Renderer *Renderer_new(SDL_Renderer *renderer, int width, int height, int scale)
 
 void Renderer_del(Renderer *self)
 {
-    SDL_DestroyRenderer(self->renderer);
     SDL_FreeSurface(self->surface);
+    SDL_DestroyRenderer(self->renderer);
     free(self);
+}
+
+SDL_Texture *Renderer_load_image(Renderer *self, char *path)
+{
+    SDL_Surface *surface = IMG_Load(path);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(self->renderer, surface);
+    SDL_FreeSurface(surface);
+    return texture;
 }
 
 void Renderer_set_offset(Renderer *self, int x_offset, int y_offset)
@@ -39,24 +47,28 @@ void Renderer_set_offset(Renderer *self, int x_offset, int y_offset)
 
 void Renderer_clear(Renderer *self)
 {
-    Uint32 rgb = SDL_MapRGB(self->surface->format, 0, 0, 0);
-    SDL_FillRect(self->surface, NULL, rgb);
+    SDL_SetRenderDrawColor(self->renderer, 0, 0, 0, 0);
+    SDL_RenderClear(self->renderer);
 }
 
 void Renderer_draw(Renderer *self)
 {
-    SDL_Texture *image = SDL_CreateTextureFromSurface(self->renderer, self->surface);
-    SDL_RenderCopy(self->renderer, image, NULL, NULL);
     SDL_RenderPresent(self->renderer);
-    SDL_DestroyTexture(image);
+}
+
+void Renderer_draw_image(Renderer *self, SDL_Texture *image, SDL_Rect source, SDL_Rect destination)
+{
+    SDL_RenderCopy(self->renderer, image, &source, &destination);
 }
 
 void Renderer_draw_rect(Renderer *self, SDL_Rect rect, SDL_Color color)
 {
+    SDL_SetRenderDrawColor(self->renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderDrawRect(self->renderer, &rect);
 }
 
 void Renderer_fill_rect(Renderer *self, SDL_Rect rect, SDL_Color color)
 {
-    Uint32 rgb = SDL_MapRGB(self->surface->format, color.r, color.g, color.b);
-    SDL_FillRect(self->surface, &rect, rgb);
+    SDL_SetRenderDrawColor(self->renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(self->renderer, &rect);
 }

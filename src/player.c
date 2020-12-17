@@ -39,17 +39,15 @@ void _move(Player *self, double *delta_time)
 Player *Player_new()
 {
     Player *self = (Player *)malloc(sizeof(Player));
-    self->rect.x = 0;
-    self->rect.y = 0;
-    self->rect.w = 16;
-    self->rect.h = 16;
-    self->vector.x = 0;
-    self->vector.y = 0;
-    self->color.r = 255;
-    self->color.g = 0;
-    self->color.b = 0;
-    self->color.a = 0;
+    self->rect = (SDL_Rect){0, 0, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT};
+    self->vector = (SDL_Point){0, 0};
+    self->color = (SDL_Color){255, 0, 0, 0};
     self->speed = 1;
+    self->frame = 0;
+    self->playing = false;
+    self->offset = (SDL_Point){0, 0};
+    self->sprite_sheet_area = (SDL_Rect){0, 0, PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT};
+    self->sprite_sheet = NULL;
     return self;
 }
 
@@ -65,18 +63,26 @@ void Player_process_event(Player *self, SDL_Event *event)
         if (event->key.keysym.sym == SDLK_RIGHT)
         {
             _set_vector(self, 1, 0);
+            self->playing = true;
+            self->offset = PLAYER_OFFSET_RIGHT;
         }
         if (event->key.keysym.sym == SDLK_LEFT)
         {
             _set_vector(self, -1, 0);
+            self->playing = true;
+            self->offset = PLAYER_OFFSET_LEFT;
         }
         if (event->key.keysym.sym == SDLK_DOWN)
         {
             _set_vector(self, 0, 1);
+            self->playing = true;
+            self->offset = PLAYER_OFFSET_DOWN;
         }
         if (event->key.keysym.sym == SDLK_UP)
         {
             _set_vector(self, 0, -1);
+            self->playing = true;
+            self->offset = PLAYER_OFFSET_UP;
         }
     }
     if (event->type == SDL_KEYUP)
@@ -84,16 +90,48 @@ void Player_process_event(Player *self, SDL_Event *event)
         if (event->key.keysym.sym == SDLK_RIGHT || event->key.keysym.sym == SDLK_LEFT || event->key.keysym.sym == SDLK_DOWN || event->key.keysym.sym == SDLK_UP)
         {
             _set_vector(self, 0, 0);
+            self->playing = false;
+            self->frame = 0;
+            self->sprite_sheet_area.x = self->offset.x;
+            self->sprite_sheet_area.y = self->offset.y;
         }
     }
 }
 
 void Player_update(Player *self, double *delta_time)
 {
+    if (!self->sprite_sheet)
+    {
+        // Ne pas faire de mise à jour si la texture n'est pas chargée.
+        return;
+    }
     _move(self, delta_time);
+
+    int sprite_sheet_width;
+    SDL_QueryTexture(self->sprite_sheet, NULL, NULL, &sprite_sheet_width, NULL);
+    int frames = sprite_sheet_width / PLAYER_SPRITE_WIDTH;
+
+    if (self->playing)
+    {
+        self->frame++;
+        if (self->frame > PLAYER_ANIMATION_SPEED)
+        {
+            self->frame = 0;
+        }
+    }
+
+    int index = self->frame * frames / PLAYER_ANIMATION_SPEED;
+    int current_index = fmin(index, frames - 1);
+    self->sprite_sheet_area.x = (current_index % frames) * PLAYER_SPRITE_WIDTH + self->offset.x;
+    self->sprite_sheet_area.y = (current_index / frames) * PLAYER_SPRITE_HEIGHT + self->offset.y;
 }
 
 void Player_draw(Player *self, Renderer *renderer)
 {
-    Renderer_fill_rect(renderer, self->rect, self->color);
+    Renderer_draw_rect(renderer, self->rect, self->color);
+    if (!self->sprite_sheet)
+    {
+        self->sprite_sheet = Renderer_load_image(renderer, PLAYER_SPRITE_SHEET);
+    }
+    Renderer_draw_image(renderer, self->sprite_sheet, self->sprite_sheet_area, self->rect);
 }

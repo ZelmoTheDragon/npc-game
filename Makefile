@@ -9,7 +9,7 @@ CC = gcc
 CFLAGS = -W -Wall -ansi -std=c99 -g
 LIBS = 
 LDFLAGS = $(sdl2-config --cflags --libs)
-INCLUDES = -lSDL2 -lSDL2_ttf -lSDL2_image
+INCLUDES = -lSDL2 -lSDL2_ttf -lSDL2_image -lm
 DIR_SRC = src
 DIR_RES = res
 DIR_OUT = out
