@@ -31,7 +31,7 @@ void Renderer_del(Renderer *self)
     free(self);
 }
 
-SDL_Texture *Renderer_load_image(Renderer *self, char *path)
+SDL_Texture *Renderer_load_image(Renderer *self, const char path[])
 {
     SDL_Surface *surface = IMG_Load(path);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(self->renderer, surface);

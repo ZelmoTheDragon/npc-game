@@ -10,16 +10,24 @@
 /**
  * Point d'entrée.  
  * 
- * \param argc
- * \param argv
- * \return Code de retour: '0' en cas de succès ou une autre valeur en cas d'erreur
+ * \param argc  Nombre de paramètre
+ * \param argv  Paramètres système
+ * \return      Code de retour: '0' en cas de succès ou une autre valeur en cas d'erreur
  */
 int main(int argc, char *argv[])
 {
     // Initialiation du SDL.
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         SDL_Log("Fail to load SDL2: %s", SDL_GetError());
+        SDL_Quit();
+        return EXIT_FAILURE;
+    }
+
+    if (IMG_Init(IMG_INIT_PNG) == 0)
+    {
+        SDL_Log("Fail to load SDL2 Image: %s", SDL_GetError());
+        IMG_Quit();
         SDL_Quit();
         return EXIT_FAILURE;
     }
@@ -52,6 +60,7 @@ int main(int argc, char *argv[])
     Engine_start(engine);
 
     // Libération des ressources.
+    IMG_Quit();
     SDL_DestroyWindow(window);
     SDL_Quit();
     SDL_Log("END.\n");

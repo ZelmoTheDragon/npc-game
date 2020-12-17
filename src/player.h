@@ -18,7 +18,7 @@
 #include "renderer.h"
 
 /** Emplacement de l'image de texture du joueur. */
-static const char *PLAYER_SPRITE_SHEET = "res/images/npc_test.png";
+static const char PLAYER_SPRITE_SHEET[] = "res/images/npc_test.png";
 
 /** Largeur d'une tuile graphique. */
 static const int PLAYER_SPRITE_WIDTH = 16;

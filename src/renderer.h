@@ -68,7 +68,7 @@ void Renderer_del(Renderer *self);
  * \param path  Chemin de l'image à charger.
  * \return      Une Texture
  */
-SDL_Texture *Renderer_load_image(Renderer *self, char *path);
+SDL_Texture *Renderer_load_image(Renderer *self, const char path[]);
 
 /**
  * Modifier le décalage pour le rendu graphique.
