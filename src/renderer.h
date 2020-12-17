@@ -14,7 +14,7 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 
-/** Taille d'un pixel de couleur. */
+/** Taille d'un pixel de couleur en bit. */
 static const int DEPTH = 32;
 
 /**
@@ -47,6 +47,8 @@ typedef struct Renderer
 
 /**
  * Constructeur.
+ * 
+ * \return Une nouvelle instance
  */
 Renderer *Renderer_new(SDL_Renderer *renderer, int width, int height, int scale);
 

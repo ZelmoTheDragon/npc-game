@@ -29,6 +29,8 @@ typedef struct Manager
 
 /**
  * Constructeur.
+ * 
+ * \return Une nouvelle instance
  */
 Manager *Manager_new();
 

@@ -35,6 +35,8 @@ typedef struct Player
 
 /**
  * Constructeur.
+ * 
+ * \return Une nouvelle instance
  */
 Player *Player_new();
 

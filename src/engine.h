@@ -54,6 +54,7 @@ typedef struct Engine
  * 
  * \param window    Fenêtre SDL
  * \param renderer  Façade de rendu graphique
+ * \return Une nouvelle instance
  */
 Engine *Engine_new(SDL_Window *window, Renderer *renderer);
 

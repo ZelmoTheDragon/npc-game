@@ -47,7 +47,7 @@ void _update(Engine *self, double *delta_time)
 }
 
 /**
- * Mettre à jour tout le rendu graphique du jeu.
+ * \brief Mettre à jour tout le rendu graphique du jeu.
  * 
  * \param self  Instance
  */

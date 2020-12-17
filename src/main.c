@@ -7,7 +7,11 @@
 #include "engine.h"
 
 /**
- * Point d'entrée.   
+ * Point d'entrée.  
+ * 
+ * \param argc
+ * \param argv
+ * \return Code de retour: '0' en cas de succès ou une autre valeur en cas d'erreur
  */
 int main(int argc, char *argv[])
 {
