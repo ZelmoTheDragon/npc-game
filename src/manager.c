@@ -13,12 +13,14 @@
 Manager *Manager_new()
 {
     Manager *self = (Manager *)malloc(sizeof(Manager));
+    self->debug = Debug_new();
     self->player = Player_new();
     return self;
 }
 
 void Manager_del(Manager *self)
 {
+    Debug_del(self->debug);
     Player_del(self->player);
     free(self);
 }
@@ -30,10 +32,12 @@ void Manager_process_event(Manager *self, SDL_Event *event)
 
 void Manager_update(Manager *self, double *delta_time)
 {
+    Debug_tick(self->debug);
     Player_update(self->player, delta_time);
 }
 
 void Manager_draw(Manager *self, Renderer *renderer)
 {
+    Debug_render(self->debug);
     Player_draw(self->player, renderer);
 }

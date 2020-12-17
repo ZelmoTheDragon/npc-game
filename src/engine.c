@@ -97,18 +97,6 @@ void Engine_start(Engine *self)
     // Temps en milliseconde de repos de la boucle.
     int sleep_time;
 
-    // Déboggage:
-    // Calcul de la fréquence de la boucle.
-    //
-    // Compteur de temps
-    Uint32 timer = SDL_GetTicks();
-
-    // Compteur de FPS (Frame Per Second)
-    int fps = 0;
-
-    // Compteur de UPS (Update Per Second)
-    int ups = 0;
-
     // Boucle principale du jeu
     // Toujours actif temps que le moteur est en fonctionnement.
 
@@ -123,23 +111,10 @@ void Engine_start(Engine *self)
         // Mise à jour du jeu
         // Appelé 60 fois par seconde
         _update(self, &delta);
-        ups++;
 
         // Mise à jour du rendu graphique
         // Appelé 60 fois par seconde
         _draw(self);
-        fps++;
-
-        // Deboggage:
-        // Affiche dans la console la fréquence de la boucle
-        // toute les secondes
-        if (SDL_GetTicks() - timer >= 1000)
-        {
-            SDL_Log("FPS: %u, UPS: %u\n", fps, ups);
-            ups = 0;
-            fps = 0;
-            timer += 1000;
-        }
 
         // Calcul de temps
         // Synchronise la boucle à 60 FPS

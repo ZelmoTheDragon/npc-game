@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include "renderer.h"
+#include "debug.h"
 #include "player.h"
 
 /**
@@ -22,6 +23,8 @@
  */
 typedef struct Manager
 {
+    /** Débogueur. */
+    Debug *debug;
 
     /** Joueur. */
     Player *player;
