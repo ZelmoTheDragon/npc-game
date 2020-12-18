@@ -63,7 +63,7 @@ void _read_file(TileMap *self, IntArray *array, const char path[])
  * 
  * \param self      Instance
  * \param array     Carte de tuile
- * \param renderer  Moteur de rendu
+ * \param renderer  Façade de rendu graphique
  */
 void _render_tile_map(TileMap *self, IntArray *array, Renderer *renderer)
 {
@@ -107,7 +107,7 @@ TileMap *TileMap_new()
     self->map_width = 0;
     self->map_height = 0;
 
-    // La carte actuelle est composé de deux couches superposées.
+    // La carte actuelle est composée de deux couches superposées.
     // Chaque couche est instancié séparément.
     IntArray *layer0 = IntArray_new();
     self->maps[0] = *layer0;
@@ -130,10 +130,12 @@ void TileMap_process_event(TileMap *self, SDL_Event *event)
 
 void TileMap_update(TileMap *self, double *delta_time)
 {
+    // Initialiser la couche 0 (le sol)
     if (IntArray_is_empty(&self->maps[0]))
     {
         _read_file(self, &self->maps[0], TILE_MAP_LAYER_0);
     }
+    // Initialiser la couche 1 (les objets)
     if (IntArray_is_empty(&self->maps[1]))
     {
         _read_file(self, &self->maps[1], TILE_MAP_LAYER_1);
@@ -142,10 +144,13 @@ void TileMap_update(TileMap *self, double *delta_time)
 
 void TileMap_draw(TileMap *self, Renderer *renderer)
 {
+    // Charger la texture
     if (!self->tile_set)
     {
         self->tile_set = Renderer_load_image(renderer, TILE_SET);
     }
+    // Dessiner la couche 0 (le sol)
     _render_tile_map(self, &self->maps[0], renderer);
+    // Dessiner la couche 1 (les objets)
     _render_tile_map(self, &self->maps[1], renderer);
 }

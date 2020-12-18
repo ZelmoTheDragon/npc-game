@@ -40,8 +40,8 @@ SDL_Texture *Renderer_load_image(Renderer *self, const char path[])
 
 void Renderer_set_offset(Renderer *self, int x_offset, int y_offset)
 {
-    self->x_offset = x_offset;
-    self->y_offset = y_offset;
+    self->x_offset = x_offset - self->width / 2;
+    self->y_offset = y_offset - self->height / 2;
 }
 
 void Renderer_clear(Renderer *self)
@@ -57,17 +57,23 @@ void Renderer_draw(Renderer *self)
 
 void Renderer_draw_image(Renderer *self, SDL_Texture *image, SDL_Rect source, SDL_Rect destination)
 {
+    destination.x -= self->x_offset;
+    destination.y -= self->y_offset;
     SDL_RenderCopy(self->graphic2d, image, &source, &destination);
 }
 
 void Renderer_draw_rect(Renderer *self, SDL_Rect rect, SDL_Color color)
 {
+    rect.x -= self->x_offset;
+    rect.y -= self->y_offset;
     SDL_SetRenderDrawColor(self->graphic2d, color.r, color.g, color.b, color.a);
     SDL_RenderDrawRect(self->graphic2d, &rect);
 }
 
 void Renderer_fill_rect(Renderer *self, SDL_Rect rect, SDL_Color color)
 {
+    rect.x -= self->x_offset;
+    rect.y -= self->y_offset;
     SDL_SetRenderDrawColor(self->graphic2d, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(self->graphic2d, &rect);
 }

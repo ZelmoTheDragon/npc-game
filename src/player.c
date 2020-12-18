@@ -32,6 +32,19 @@ void _move(Player *self, double *delta_time)
     self->rect.y += (self->speed * self->vector.y) * *delta_time;
 }
 
+/**
+ * Centrer la caméra sur le joueur.
+ * 
+ * \param self          Instance
+ * \param renderer  Façade de rendu graphique
+ */
+void _set_camera(Player *self, Renderer *renderer)
+{
+    int cx = self->rect.x + self->rect.w / 2;
+    int cy = self->rect.y + self->rect.h / 2;
+    Renderer_set_offset(renderer, cx, cy);
+}
+
 // ====================
 // Implémentation
 // ====================
@@ -132,5 +145,6 @@ void Player_draw(Player *self, Renderer *renderer)
     {
         self->sprite_sheet = Renderer_load_image(renderer, PLAYER_SPRITE_SHEET);
     }
+    _set_camera(self, renderer);
     Renderer_draw_image(renderer, self->sprite_sheet, self->sprite_sheet_area, self->rect);
 }
