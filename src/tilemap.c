@@ -9,11 +9,13 @@
 
 /**
  * Lire une carte au format CSV.
+ * Permet également de déterminer la taille de la carte dynamiquement.
  * 
  * \param self  Instance
+ * \param array Tableau contenant les index des tuiles graphiques
  * \param path  Emplacement de la carte
  */
-void _read_file(TileMap *self, const char path[])
+void _read_file(TileMap *self, IntArray *array, const char path[])
 {
     int map_width = 0;
     int map_height = 0;
@@ -29,7 +31,7 @@ void _read_file(TileMap *self, const char path[])
             while (token != NULL)
             {
                 tile_index = strtol(token, NULL, 10);
-                IntArray_add(self->map, tile_index);
+                IntArray_add(array, tile_index);
                 token = strtok(NULL, CSV_CELL_SEPARATOR);
 
                 // Calculer dynamiquement la largeur de la carte en unité de tuile graphique.
@@ -56,46 +58,15 @@ void _read_file(TileMap *self, const char path[])
     }
 }
 
-// ====================
-// Implémentation
-// ====================
-
-TileMap *TileMap_new()
+/**
+ * Effectuer le rendu graphique.
+ * 
+ * \param self      Instance
+ * \param array     Carte de tuile
+ * \param renderer  Moteur de rendu
+ */
+void _render_tile_map(TileMap *self, IntArray *array, Renderer *renderer)
 {
-    TileMap *self = (TileMap *)malloc(sizeof(TileMap));
-    self->tile_set = NULL;
-    self->map = IntArray_new();
-    self->map_width = 0;
-    self->map_height = 0;
-    return self;
-}
-
-void TileMap_del(TileMap *self)
-{
-    IntArray_del(self->map);
-    free(self);
-}
-
-void TileMap_process_event(TileMap *self, SDL_Event *event)
-{
-    // RAS
-}
-
-void TileMap_update(TileMap *self, double *delta_time)
-{
-    if (IntArray_is_empty(self->map))
-    {
-        _read_file(self, TILE_MAP_LAYER_0);
-    }
-}
-
-void TileMap_draw(TileMap *self, Renderer *renderer)
-{
-    if (!self->tile_set)
-    {
-        self->tile_set = Renderer_load_image(renderer, TILE_SET);
-    }
-
     int index;
     int tile_index;
 
@@ -113,10 +84,68 @@ void TileMap_draw(TileMap *self, Renderer *renderer)
         {
             destination.x = x * TILE_WIDTH;
             index = x + y * self->map_width;
-            tile_index = IntArray_get(self->map, index);
-            source.x = (tile_index % tileset_columns) * TILE_WIDTH;
-            source.y = (tile_index / tileset_columns) * TILE_HEIGHT;
-            Renderer_draw_image(renderer, self->tile_set, source, destination);
+            tile_index = IntArray_get(array, index);
+            if (tile_index != TILE_EMPTY)
+            {
+                source.x = (tile_index % tileset_columns) * TILE_WIDTH;
+                source.y = (tile_index / tileset_columns) * TILE_HEIGHT;
+                Renderer_draw_image(renderer, self->tile_set, source, destination);
+            }
         }
     }
+}
+
+// ====================
+// Implémentation
+// ====================
+
+TileMap *TileMap_new()
+{
+    TileMap *self = (TileMap *)malloc(sizeof(TileMap));
+    self->tile_set = NULL;
+    self->maps = (IntArray *)malloc(2 * sizeof(IntArray));
+    self->map_width = 0;
+    self->map_height = 0;
+
+    // La carte actuelle est composé de deux couches superposées.
+    // Chaque couche est instancié séparément.
+    IntArray *layer0 = IntArray_new();
+    self->maps[0] = *layer0;
+    IntArray *layer1 = IntArray_new();
+    self->maps[1] = *layer1;
+
+    return self;
+}
+
+void TileMap_del(TileMap *self)
+{
+    free(self->maps);
+    free(self);
+}
+
+void TileMap_process_event(TileMap *self, SDL_Event *event)
+{
+    // RAS
+}
+
+void TileMap_update(TileMap *self, double *delta_time)
+{
+    if (IntArray_is_empty(&self->maps[0]))
+    {
+        _read_file(self, &self->maps[0], TILE_MAP_LAYER_0);
+    }
+    if (IntArray_is_empty(&self->maps[1]))
+    {
+        _read_file(self, &self->maps[1], TILE_MAP_LAYER_1);
+    }
+}
+
+void TileMap_draw(TileMap *self, Renderer *renderer)
+{
+    if (!self->tile_set)
+    {
+        self->tile_set = Renderer_load_image(renderer, TILE_SET);
+    }
+    _render_tile_map(self, &self->maps[0], renderer);
+    _render_tile_map(self, &self->maps[1], renderer);
 }

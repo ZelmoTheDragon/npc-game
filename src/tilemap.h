@@ -42,14 +42,16 @@ static const char CSV_LINE_SEPARATOR[] = "\n";
 
 /**
  * Une carte composée de tuile graphique.
+ * Comme une carte est composé de plusieurs couche, l'attribut 'maps' 
+ * est en réalité un tableau dynamique: 'IntArray[]'.
  */
 typedef struct TileMap
 {
     /** Texture de la carte. */
     SDL_Texture *tile_set;
 
-    /** Tableau contenant les index des tuiles graphiques. */
-    IntArray *map;
+    /** Tableaux contenants les index des tuiles graphiques. */
+    IntArray *maps;
 
     /** Largeur de la carte (en tuile). */
     int map_width;
