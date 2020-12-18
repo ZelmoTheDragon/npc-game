@@ -17,6 +17,7 @@
 #include <SDL2/SDL.h>
 #include "renderer.h"
 #include "debug.h"
+#include "tilemap.h"
 #include "player.h"
 
 /**
@@ -26,6 +27,9 @@ typedef struct Manager
 {
     /** Débogueur. */
     Debug *debug;
+
+    /** Carte du niveau. */
+    TileMap *tilemap;
 
     /** Joueur. */
     Player *player;

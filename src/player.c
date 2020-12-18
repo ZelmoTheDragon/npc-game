@@ -128,7 +128,6 @@ void Player_update(Player *self, double *delta_time)
 
 void Player_draw(Player *self, Renderer *renderer)
 {
-    Renderer_draw_rect(renderer, self->rect, self->color);
     if (!self->sprite_sheet)
     {
         self->sprite_sheet = Renderer_load_image(renderer, PLAYER_SPRITE_SHEET);
