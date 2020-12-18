@@ -1,3 +1,9 @@
 # build
 out/
 npc-game
+
+# vscode
+**/.vscode
+
+# Tiled
+**/tiled
