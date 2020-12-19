@@ -1,6 +1,6 @@
 /**
  * \file engine.h
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Prototype du moteur du jeu.
  * Le moteur orchestre tous les autres éléments du jeu.

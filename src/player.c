@@ -1,6 +1,6 @@
 /**
  * \file player.c
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Implémentation du prototype du joueur.
  */
@@ -109,6 +109,8 @@ void Player_process_event(Player *self, SDL_Event *event)
             self->sprite_sheet_area.y = self->offset.y;
         }
     }
+    // FIXME:
+    // Correction déplacement
 }
 
 void Player_update(Player *self, double *delta_time)

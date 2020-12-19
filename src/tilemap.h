@@ -1,6 +1,6 @@
 /**
  * \file tilemap.h
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Prototype pour la carte de tuile graphique.
  */

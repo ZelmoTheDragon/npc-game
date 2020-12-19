@@ -1,6 +1,6 @@
 /**
  * \file player.h
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Prototype du joueur.
  * Désigne une entité contrôlable par l'utilisateur.

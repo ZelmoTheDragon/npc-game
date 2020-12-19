@@ -1,6 +1,6 @@
 /**
  * \file main.c
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  * 
  * Principal.
  */

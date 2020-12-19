@@ -1,6 +1,6 @@
 /**
  * \file debug.c
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Implémentation du prototype des informations de débogage.
  */

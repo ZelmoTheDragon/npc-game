@@ -1,6 +1,6 @@
 /**
  * \file engine.c
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Implémentation du prototype du moteur du jeu.
  */

@@ -1,6 +1,6 @@
 /**
  * \file debug.h
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Prototype pour les informations de débogage.
  */

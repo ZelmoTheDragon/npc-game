@@ -1,6 +1,6 @@
 /**
  * \file manager.h
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Prototype du gestionnaire du jeu.
  * Le gestionnaire orchestre principalement les entités du jeu.

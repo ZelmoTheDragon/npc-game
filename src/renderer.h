@@ -1,6 +1,6 @@
 /**
  * \file renderer.h
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Prototype du moteur de rendu graphique.
  * Une façade à SDL pour proposer des fonctions de dessins simplifiées/

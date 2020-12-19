@@ -1,6 +1,6 @@
 /**
  * \file intarray.c
- * \author: MOSELLE Maxime
+ * \author MOSELLE Maxime
  *  
  * Implémentation du prototype du tableau dynamique.
  */
